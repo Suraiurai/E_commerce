@@ -41,8 +41,9 @@ class BtnFrave extends StatelessWidget {
           decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: BorderRadius.circular(radius),
-              boxShadow: [BoxShadow(color:Colors.grey.shade300, blurRadius: blurradius)]
-              ),
+              boxShadow: [
+                BoxShadow(color: Colors.grey.shade300, blurRadius: blurradius)
+              ]),
           child: Center(
             child: TextFrave(
               text: text,

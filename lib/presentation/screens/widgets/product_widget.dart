@@ -1,18 +1,27 @@
 // ignore_for_file: must_be_immutable
-
+import 'package:e_commerce_flutter/domain/blocs/addtobox/addtobox_bloc.dart';
+import 'package:e_commerce_flutter/domain/blocs/fav_bloc/fav_product_bloc.dart';
+import 'package:e_commerce_flutter/domain/models/product.dart';
 import 'package:e_commerce_flutter/presentation/components/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../themes/colors.dart';
 
-import '../../../domain/models/product.dart';
+class ProductWidget extends StatefulWidget {
+  ProductWidget(
+      {super.key,  required this.id, required this.product});
 
-class ProductWidget extends StatelessWidget {
-  ProductWidget({
-    super.key,
-    required this.product,
-  });
   final Product product;
+  final int id;
+
+  @override
+  State<ProductWidget> createState() => _ProductWidgetState();
+}
+
+class _ProductWidgetState extends State<ProductWidget> {
   var box = Hive.box('products');
+  var box_fav = Hive.box('fav_product');
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,19 +40,45 @@ class ProductWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                 child: Image.network(
-                  product.images.first,
+                  widget.product.images[0],
                   height: 150,
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.fill,
                 ),
               ),
-              Positioned(
-                  top: 5,
-                  right: 5,
-                  child: Icon(
-                    Icons.favorite_border_outlined,
-                    color: Colors.grey.shade800,
-                  ))
+              BlocBuilder<FavProductBloc, FavProductChanged>(
+                builder: (context, state) {
+                  if(state is FavListState){
+                    if (box_fav.containsKey('fav${widget.id}')) {
+                     return Positioned(
+                          top: 5,
+                          right: 5,
+                          child: InkWell(
+                            onTap: () {
+                              context.read<FavProductBloc>().add(OnDeleteEvent(widget.id));
+                            },
+                            child: Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ),
+                          ));
+                    }else{
+                      return Positioned(
+                          top: 5,
+                          right: 5,
+                          child: InkWell(
+                            onTap: () {
+                              context.read<FavProductBloc>().add(OnAddEvent(ida: widget.id, productadd: widget.product));
+                            },
+                            child: Icon(
+                              Icons.favorite_border,
+                              color: Colors.red,
+                            ),
+                          ));
+                    }
+                  }return SizedBox();
+                },
+              )
             ],
           ),
           Padding(
@@ -55,7 +90,7 @@ class ProductWidget extends StatelessWidget {
                 Container(
                   height: 40,
                   child: Text(
-                    product.title,
+                    widget.product.title,
                     maxLines: 2,
                     style: TextStyle(fontSize: 16),
                   ),
@@ -65,12 +100,12 @@ class ProductWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextFrave(
-                      text: '${product.price} \$',
+                      text: '${widget.product.price} \$',
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
                     ),
                     Text(
-                      product.discountPercentage.toString() + '\$',
+                      widget.product.discountPercentage.toString() + '\$',
                       style: TextStyle(decoration: TextDecoration.lineThrough),
                     ),
                   ],
@@ -79,7 +114,20 @@ class ProductWidget extends StatelessWidget {
                 Center(
                   child: InkWell(
                     onTap: () async {
-                      await box.add(product);
+                      context.read<AddtoboxBloc>()
+                        ..add(OnAddtoBoxEvent(
+                            product: widget.product, id: widget.id));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: ColorsUI.primaryColorFrave,
+                          duration: Duration(seconds: 1),
+                          content: Center(
+                            child: TextFrave(
+                              text: 'Added to basket!',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          )));
                     },
                     child: BtnFrave(
                       text: 'Add to Box',
@@ -98,3 +146,38 @@ class ProductWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+ // ScaffoldMessenger.of(context).clearSnackBars();
+                            // if (isFav) {
+                            //   await box.deleteAt(widget.id);
+                            //   var snacbar = const SnackBar(
+                            //       backgroundColor: ColorsUI.primaryColorFrave,
+                            //       duration: Duration(seconds: 1),
+                            //       content: Center(
+                            //         child: TextFrave(
+                            //           text: 'Deleted from Favourites!',
+                            //           fontWeight: FontWeight.bold,
+                            //           fontSize: 14,
+                            //           color: Colors.white,
+                            //         ),
+                            //       ));
+                            //   ScaffoldMessenger.of(context)
+                            //       .showSnackBar(snacbar);
+                            // } else {
+                            //   await box.add(widget.product);
+                            //   var snac =const SnackBar(
+                            //       backgroundColor: ColorsUI.primaryColorFrave,
+                            //       duration: Duration(seconds: 1),
+                            //       content: Center(
+                            //         child: TextFrave(
+                            //           text: 'Added to Favourites!',
+                            //           fontWeight: FontWeight.bold,
+                            //           fontSize: 14,
+                            //           color: Colors.white,
+                            //         ),
+                            //       ));
+                            //   ScaffoldMessenger.of(context).showSnackBar(snac);
+                              
+                            // }

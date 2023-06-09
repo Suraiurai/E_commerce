@@ -38,7 +38,7 @@ class _MyWidgetState extends State<MyWidget> {
                             context.read<SearchBloc>().add(SearchTappedEvent(
                                 state.jsonSearch.products[index].id
                                     .toString()));
-                            NavigatinOneProduct(OneProductPage(id: state.jsonSearch.products[index].id)).navigation(context);
+                            NavigatinProduct(OneProductPage(id: state.jsonSearch.products[index].id)).navigation(context);
                            
                           },
                           child: Padding(

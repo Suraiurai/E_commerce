@@ -27,6 +27,8 @@ class Product {
   @HiveField(10)
   String thumbnail;
 
+
+
   Product({
     required this.id,
     required this.title,
@@ -39,6 +41,7 @@ class Product {
     required this.category,
     required this.thumbnail,
     required this.images,
+   
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(

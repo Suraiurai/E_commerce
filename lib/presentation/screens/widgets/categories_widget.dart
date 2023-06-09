@@ -19,7 +19,7 @@ class Categories_Widiget extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
+              child: Image.network(
                 pic,
                 width: 100,
                 height: 200,

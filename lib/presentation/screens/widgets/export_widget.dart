@@ -6,3 +6,4 @@ export './search_delegate.dart';
 export './search_delegate_ui.dart';
 export './options_profile.dart';
 export './navigator.dart';
+export './basketproduct.dart';

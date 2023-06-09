@@ -1,8 +1,11 @@
 import 'package:e_commerce_flutter/domain/models/repository.dart';
 import 'package:e_commerce_flutter/presentation/components/shimmer.dart';
 import 'package:e_commerce_flutter/presentation/components/widget.dart';
+import 'package:e_commerce_flutter/presentation/screens/pages/categoryproducts.dart';
 import 'package:e_commerce_flutter/presentation/themes/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/export_widget.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -37,24 +40,33 @@ class _CategoryPageState extends State<CategoryPage> {
                       ? TabBarView(
                           children: [
                             ListView.builder(
-                              itemCount: snap.data!.length,
-                              itemBuilder: (context, index) {
-                              return ExpansionTile(
-                                title: Text(
-                                  snap.data![index],
-                                ),
-                                children: [
-                                  
-                                    ListTile(
-                                      title: Text(snap.data![0]),
+                                itemCount: snap.data!.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                       NavigatinProduct(CategoryProductPage(
+                                                  category: snap.data![index],))
+                                              .navigation(context);
+                                    },
+                                    child: ListTile(
+                                      title: Text(snap.data![index]),
                                     ),
-                                ],
-                              );
-                            }),
+                                  );
+                                }),
                             Container()
                           ],
                         )
-                      : ShimmerFrave();
+                      : ListView.builder(
+                          itemCount: 20,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: ShimmerFrave(
+                                heght: 50,
+                                width: MediaQuery.of(context).size.width,
+                              ),
+                            );
+                          });
                 })));
   }
 }

@@ -7,12 +7,11 @@ import 'package:e_commerce_flutter/presentation/components/widget.dart';
 import 'package:e_commerce_flutter/presentation/screens/widgets/product_widget.dart';
 import 'package:e_commerce_flutter/presentation/themes/colors.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/navigator.dart';
 
 class OneProductPage extends StatelessWidget {
   const OneProductPage({super.key, required this.id});
-final int id;
+  final int id;
   @override
   Widget build(BuildContext context) {
     List randomnumbers = [];
@@ -24,9 +23,10 @@ final int id;
         body: SafeArea(
             child: ListView(shrinkWrap: true, children: [
       FutureBuilder(
-        future: GetOneProduct().getoneproduct(id),
-        builder: (conetx, snap){
-         return snap.hasData ? Column(
+          future: GetOneProduct().getoneproduct(id),
+          builder: (conetx, snap) {
+            return snap.hasData
+                ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
@@ -41,7 +41,7 @@ final int id;
                             SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.3),
                             Text(
-                             snap.data!.title,
+                              snap.data!.title,
                               style: const TextStyle(fontSize: 18),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -61,20 +61,20 @@ final int id;
                             viewportFraction: 1,
                             aspectRatio: 1.3,
                           )),
-                          SizedBox(height: 5),
-                          Center(
-                          child: DotsIndicator(
-                            dotsCount: snap.data!.images.length,
-                            position: 0.0,
-                            decorator: DotsDecorator(
-                              activeColor: ColorsUI.primaryColorFrave,
-                              size: const Size.square(8.0),
-                              activeSize: const Size(15.0, 9.0),
-                              activeShape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
-                            ),
+                      SizedBox(height: 5),
+                      Center(
+                        child: DotsIndicator(
+                          dotsCount: snap.data!.images.length,
+                          position: 0.0,
+                          decorator: DotsDecorator(
+                            activeColor: ColorsUI.primaryColorFrave,
+                            size: const Size.square(8.0),
+                            activeSize: const Size(15.0, 9.0),
+                            activeShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
                           ),
                         ),
+                      ),
                       SizedBox(height: 15),
                       Padding(
                           padding: const EdgeInsets.symmetric(
@@ -100,49 +100,57 @@ final int id;
                       ),
                       SizedBox(height: 20),
                       FutureBuilder(
-                        future: GetProduct().getactioninfo(),
-                        builder: (context, snapshot){
-                        return snapshot.hasData ?  Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              1.1,
-                                          child: GridView.builder(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 2,
-                                                      childAspectRatio: 0.6,
-                                                      mainAxisSpacing: 15,
-                                                      crossAxisSpacing: 15),
-                                              itemCount: 6,
-                                              itemBuilder: (context, index) {
-                                                return InkWell(
-                                                  onTap: () {
-                                                    
-                                                    NavigatinOneProduct(OneProductPage(id: snapshot.data![randomnumbers[index]].id))
-                                                        .navigation(context);
-                                                  },
-                                                  child: ProductWidget(
-
-                                                    product:  snapshot.data![randomnumbers[index]]
-                                                      // pic: snapshot.data!.products[randomnumbers[index]].images[0],
-                                                      // text: snapshot.data!.products[randomnumbers[index]].title,
-                                                      // oldprice: snapshot.data!.products[randomnumbers[index]].price,
-                                                      // discountprice: (snapshot.data!.products[randomnumbers[index]].price -snapshot.data!.products[randomnumbers[index]].discountPercentage).toStringAsFixed(2),
-                                                      ),
-                                                );
-                                              })),
-                                    ) : ShimmerFrave();
-                      })
+                          future: GetProduct().getactioninfo(),
+                          builder: (context, snapshot) {
+                            return snapshot.hasData
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                1.1,
+                                        child: GridView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 2,
+                                                    childAspectRatio: 0.6,
+                                                    mainAxisSpacing: 15,
+                                                    crossAxisSpacing: 15),
+                                            itemCount: 6,
+                                            itemBuilder: (context, index) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  NavigatinProduct(OneProductPage(
+                                                          id: snapshot
+                                                              .data![
+                                                                  randomnumbers[
+                                                                      index]]
+                                                              .id))
+                                                      .navigation(context);
+                                                },
+                                                child: ProductWidget(
+                                                  product:  snapshot.data![randomnumbers[index]],
+                                                  id: index,
+                                                ),
+                                              );
+                                            })),
+                                  )
+                                : ShimmerFrave(
+                                    heght: MediaQuery.of(context).size.height,
+                                    width: MediaQuery.of(context).size.width,
+                                  );
+                          })
                     ],
-                  ) : ShimmerFrave();
-      })
+                  )
+                : ShimmerFrave(
+                    heght: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                  );
+          })
     ])));
   }
 }
