@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 
-class NavigatinOneProduct {
+class NavigatinProduct {
   final route;
 
-  NavigatinOneProduct(this.route);
+  NavigatinProduct(this.route);
   navigation(var context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return route;

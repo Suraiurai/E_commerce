@@ -6,3 +6,4 @@ export './oneproduct.dart';
 export './profile.dart';
 export 'bottomnavpage.dart';
 export './loginpage.dart';
+export './categoryproducts.dart';

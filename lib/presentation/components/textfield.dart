@@ -22,13 +22,13 @@ class TextFormFrave extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      style: GoogleFonts.getFont('Roboto', fontSize: 17),
+      style: GoogleFonts.getFont('Roboto', fontSize: 18),
       obscureText: isPassword,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         prefixText: number,
         
-        prefixStyle: TextStyle(color: Colors.grey.shade500),
+        prefixStyle: TextStyle(color: Colors.black, fontSize: 17),
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15.0),
         filled: true,
         focusedBorder: OutlineInputBorder(

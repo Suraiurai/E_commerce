@@ -10,12 +10,9 @@ var url = 'https://dummyjson.com/products';
 class GetProduct {
   Future<List<Product>> getactioninfo() async {
     final res = await http.get(Uri.parse(url));
-   
     var deco = jsonDecode(res.body);
-    
     List<Product> products = [];
     final jsonpPoducts = deco["products"];
-    
     for (var json in jsonpPoducts) {
       products.add(Product.fromJson(json));
     }
@@ -56,5 +53,20 @@ class GetOneProduct {
     var deco = jsonDecode(res.body);
     jsonaction = JsonOneProduct.fromJson(deco);
     return jsonaction;
+  }
+}
+
+
+
+class GetCategoryProduct {
+  Future<List<Product>> getactioninfo(String category) async {
+    final res = await http.get(Uri.parse('https://dummyjson.com/products/category/$category'));
+    var deco = jsonDecode(res.body);
+    List<Product> products = [];
+    final jsonpPoducts = deco["products"];
+    for (var json in jsonpPoducts) {
+      products.add(Product.fromJson(json));
+    }
+    return products;
   }
 }

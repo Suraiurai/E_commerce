@@ -9,6 +9,8 @@ class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
+     TextEditingController controller2 = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -30,10 +32,11 @@ class LogInPage extends StatelessWidget {
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: TextFormFrave(
-                    controller: controller,
+                    controller: controller2,
                     number: '+993',
                   )),
                   SizedBox(height: 40),
+                  Text(controller2.value.text, style: TextStyle(color: Colors.black),),
               BtnFrave(
                 text: 'Log In',
                 width: 200,
