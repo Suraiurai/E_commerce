@@ -44,10 +44,9 @@ class FavouritePage extends StatelessWidget {
                                       mainAxisSpacing: 15,
                                       crossAxisSpacing: 15,
                                       crossAxisCount: 2),
-                              itemCount: state.favproducts.length,
+                              itemCount: box.length,
                               itemBuilder: (context, index) {
-                                debugPrint(
-                                    state.favproducts[index].id.toString());
+                      
                                 return ProductWidget(
                                     id: state.favproducts[index].id,
                                     product: state.favproducts[index]);

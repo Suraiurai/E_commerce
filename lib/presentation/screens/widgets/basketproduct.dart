@@ -99,6 +99,7 @@ class BasketProduct extends StatelessWidget {
                                           ),
                                           SizedBox(height: 10),
                                           Row(
+                                        
                                             children: [
                                               Column(
                                                 crossAxisAlignment:
@@ -113,7 +114,7 @@ class BasketProduct extends StatelessWidget {
                                                                 .lineThrough),
                                                   ),
                                                   TextFrave(
-                                                      text: (product[index].price - product[index].discountPercentage).toString() + ' \$'),
+                                                      text: (product[index].price - product[index].discountPercentage).toStringAsFixed(2) + ' \$'),
                                                 ],
                                               ),
                                               const SizedBox(width: 50),

@@ -9,11 +9,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../themes/colors.dart';
 
 class ProductWidget extends StatefulWidget {
-  ProductWidget(
-      {super.key,  required this.id, required this.product});
+  ProductWidget({super.key, required this.id, required this.product});
 
   final Product product;
-  final int id;
+  final dynamic id;
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -48,27 +47,55 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
               BlocBuilder<FavProductBloc, FavProductChanged>(
                 builder: (context, state) {
-                  if(state is FavListState){
+                  if (state is FavListState) {
                     if (box_fav.containsKey('fav${widget.id}')) {
-                     return Positioned(
+                      return Positioned(
                           top: 5,
                           right: 5,
                           child: InkWell(
                             onTap: () {
-                              context.read<FavProductBloc>().add(OnDeleteEvent(widget.id));
+                              context
+                                  .read<FavProductBloc>()
+                                  .add(OnDeleteEvent(widget.id));
+                              var snacbar = const SnackBar(
+                                  backgroundColor: ColorsUI.primaryColorFrave,
+                                  duration: Duration(seconds: 1),
+                                  content: Center(
+                                    child: TextFrave(
+                                      text: 'Deleted from Favourites!',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snacbar);
                             },
                             child: Icon(
                               Icons.favorite,
                               color: Colors.red,
                             ),
                           ));
-                    }else{
+                    } else {
                       return Positioned(
                           top: 5,
                           right: 5,
                           child: InkWell(
                             onTap: () {
-                              context.read<FavProductBloc>().add(OnAddEvent(ida: widget.id, productadd: widget.product));
+                              context.read<FavProductBloc>().add(OnAddEvent(
+                                  ida: widget.id, productadd: widget.product));
+                              var snac = const SnackBar(
+                                  backgroundColor: ColorsUI.primaryColorFrave,
+                                  duration: Duration(seconds: 1),
+                                  content: Center(
+                                    child: TextFrave(
+                                      text: 'Added to Favourites!',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ));
+                              ScaffoldMessenger.of(context).showSnackBar(snac);
                             },
                             child: Icon(
                               Icons.favorite_border,
@@ -76,7 +103,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                             ),
                           ));
                     }
-                  }return SizedBox();
+                  }
+                  return SizedBox();
                 },
               )
             ],
@@ -146,38 +174,3 @@ class _ProductWidgetState extends State<ProductWidget> {
     );
   }
 }
-
-
-
- // ScaffoldMessenger.of(context).clearSnackBars();
-                            // if (isFav) {
-                            //   await box.deleteAt(widget.id);
-                            //   var snacbar = const SnackBar(
-                            //       backgroundColor: ColorsUI.primaryColorFrave,
-                            //       duration: Duration(seconds: 1),
-                            //       content: Center(
-                            //         child: TextFrave(
-                            //           text: 'Deleted from Favourites!',
-                            //           fontWeight: FontWeight.bold,
-                            //           fontSize: 14,
-                            //           color: Colors.white,
-                            //         ),
-                            //       ));
-                            //   ScaffoldMessenger.of(context)
-                            //       .showSnackBar(snacbar);
-                            // } else {
-                            //   await box.add(widget.product);
-                            //   var snac =const SnackBar(
-                            //       backgroundColor: ColorsUI.primaryColorFrave,
-                            //       duration: Duration(seconds: 1),
-                            //       content: Center(
-                            //         child: TextFrave(
-                            //           text: 'Added to Favourites!',
-                            //           fontWeight: FontWeight.bold,
-                            //           fontSize: 14,
-                            //           color: Colors.white,
-                            //         ),
-                            //       ));
-                            //   ScaffoldMessenger.of(context).showSnackBar(snac);
-                              
-                            // }

@@ -1,6 +1,6 @@
-import 'package:e_commerce_flutter/domain/models/product.dart';
 import 'package:e_commerce_flutter/domain/models/repository.dart';
 import 'package:e_commerce_flutter/presentation/screens/pages/exportpage.dart';
+import 'package:e_commerce_flutter/presentation/screens/widgets/dotswidget.dart';
 import 'package:flutter/material.dart';
 import '../../components/shimmer.dart';
 import '../../components/widget.dart';
@@ -26,6 +26,7 @@ class FirstPage extends StatelessWidget {
                       child: SearchWidget())),
               SizedBox(height: 18),
               CardCarousel(),
+            
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -97,23 +98,10 @@ class FirstPage extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    TextFrave(
-                        text: 'Products',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24),
-                    BtnFrave(
-                      text: 'See all',
-                      width: 80,
-                      height: 30,
-                      fontSize: 17,
-                      backgroundColor: Colors.white,
-                      colorText: Colors.black,
-                    ),
-                  ],
-                ),
+                child: TextFrave(
+                    text: 'Products',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24),
               ),
               SizedBox(height: 10),
               FutureBuilder(

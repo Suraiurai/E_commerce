@@ -15,7 +15,7 @@ class FavProductBloc extends Bloc<FavProductEvent, FavProductChanged> {
       if (box.containsKey('fav${event.ida}') == false) {
         await box.put('fav${event.ida}', event.productadd);
      
-       emit(FavListState([event.productadd,event.ida],));
+       emit(FavListState(box.values.toList()));
       }
        
     });

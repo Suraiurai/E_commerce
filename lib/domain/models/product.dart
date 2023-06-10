@@ -5,7 +5,7 @@ part 'product.g.dart';
 @HiveType(typeId: 1)
 class Product {
   @HiveField(0)
-  int id;
+  dynamic id;
   @HiveField(1)
   String title;
   @HiveField(2)

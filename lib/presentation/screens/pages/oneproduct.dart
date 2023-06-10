@@ -1,12 +1,13 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:e_commerce_flutter/domain/models/repository.dart';
 import 'package:e_commerce_flutter/presentation/components/shimmer.dart';
 import 'package:e_commerce_flutter/presentation/components/widget.dart';
 import 'package:e_commerce_flutter/presentation/screens/widgets/product_widget.dart';
-import 'package:e_commerce_flutter/presentation/themes/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/blocs/carousel_dots/carousel_dots_bloc.dart';
+import '../widgets/dotswidget.dart';
 import '../widgets/navigator.dart';
 
 class OneProductPage extends StatelessWidget {
@@ -39,7 +40,7 @@ class OneProductPage extends StatelessWidget {
                                 },
                                 child: Icon(Icons.arrow_back_ios)),
                             SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.3),
+                                width: 20),
                             Text(
                               snap.data!.title,
                               style: const TextStyle(fontSize: 18),
@@ -58,23 +59,15 @@ class OneProductPage extends StatelessWidget {
                             );
                           },
                           options: CarouselOptions(
+                            onPageChanged: (index, reason) {
+                              context.read<CarouselDotsBloc>()
+                                ..add(OnChangeEvent(index));
+                            },
                             viewportFraction: 1,
                             aspectRatio: 1.3,
                           )),
                       SizedBox(height: 5),
-                      Center(
-                        child: DotsIndicator(
-                          dotsCount: snap.data!.images.length,
-                          position: 0.0,
-                          decorator: DotsDecorator(
-                            activeColor: ColorsUI.primaryColorFrave,
-                            size: const Size.square(8.0),
-                            activeSize: const Size(15.0, 9.0),
-                            activeShape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                          ),
-                        ),
-                      ),
+                      DotsWidget(dotscount:  snap.data!.images.length,),
                       SizedBox(height: 15),
                       Padding(
                           padding: const EdgeInsets.symmetric(
@@ -133,7 +126,8 @@ class OneProductPage extends StatelessWidget {
                                                       .navigation(context);
                                                 },
                                                 child: ProductWidget(
-                                                  product:  snapshot.data![randomnumbers[index]],
+                                                  product: snapshot.data![
+                                                      randomnumbers[index]],
                                                   id: index,
                                                 ),
                                               );
@@ -154,3 +148,5 @@ class OneProductPage extends StatelessWidget {
     ])));
   }
 }
+
+

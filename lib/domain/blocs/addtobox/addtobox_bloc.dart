@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_flutter/domain/models/product.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'addtobox_event.dart';
